@@ -53,14 +53,12 @@ diabetes-ml-app/
 │   └── test_api.py
 │
 ├── k8s/                  # Kubernetes manifests
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── namespace.yaml
+│   ├── deployment.yaml   # contains deployment, service, namespace
 │
 ├── Dockerfile             # Docker image definition
 ├── requirements.txt       # Python dependencies
 └── .github/workflows/
-    └── ci-cd.yml          # CI/CD pipeline
+    └── cicd.yml          # CI/CD pipeline
 ```
 
 ---
@@ -264,7 +262,10 @@ curl http://localhost:8000/health
 ## 🏁 Summary
 
 ✔ You built an ML CI/CD pipeline
+
 ✔ You deployed to Kubernetes
+
 ✔ You used industry tools
+
 ✔ You learned real MLOps foundations
 
