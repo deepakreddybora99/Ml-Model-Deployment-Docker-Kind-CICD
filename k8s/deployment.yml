@@ -1,0 +1,67 @@
+# -------------------------------
+# Namespace
+# -------------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ml-app
+---
+# -------------------------------
+# Deployment
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diabetes-ml-api
+  namespace: ml-app
+  labels:
+    app: diabetes-ml-api
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: diabetes-ml-api
+  template:
+    metadata:
+      labels:
+        app: diabetes-ml-api
+    spec:
+      containers:
+        - name: diabetes-ml-api
+          image: docker.io/deepakreddybora/diabetes-ml-api:cicd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# -------------------------------
+# Service
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: diabetes-ml-api
+  namespace: ml-app
+spec:
+  type: NodePort
+  selector:
+    app: diabetes-ml-api
+  ports:
+    - port: 80
+      targetPort: 8000
+      nodePort: 30007
+      protocol: TCP
