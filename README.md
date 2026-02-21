@@ -198,7 +198,17 @@ This creates:
 GitHub Actions waits until the app is running:
 
 ```bash
-kubectl rollout status deployment/diabetes-ml-api -n ml-app
+echo "=== Pods ==="
+kubectl get pods -n ml-app
+
+echo "=== Pod Describe ==="
+kubectl describe pods -n ml-app || true
+
+echo "=== Logs ==="
+kubectl logs deployment/diabetes-ml-api -n ml-app --all-containers=true || true
+
+echo "=== Rollout Status (timeout 60s) ==="
+kubectl rollout status deployment/diabetes-ml-api -n ml-app --timeout=60s || true
 ```
 
 ❌ Pipeline fails if deployment fails
@@ -269,3 +279,15 @@ curl http://localhost:8000/health
 
 ✔ You learned real MLOps foundations
 
+---
+
+## 👤 Author
+
+Deepak Reddy Bora
+GitHub: [https://github.com/deepakreddybora99](https://github.com/deepakreddybora99)
+
+---
+
+# ⭐ If you found this useful, give it a star!
+
+---
