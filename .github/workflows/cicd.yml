@@ -86,3 +86,5 @@ jobs:
         run: |
           kubectl rollout status deployment/diabetes-ml-api -n ml-app
           kubectl get pods -n ml-app
+          kubectl describe pods -n ml-app
+          kubectl logs deployment/diabetes-ml-api -n ml-app --all-containers=true
